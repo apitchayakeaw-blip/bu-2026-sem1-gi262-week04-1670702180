@@ -11,7 +11,16 @@ namespace Solution {
         {
             // 1. ตรวจสอบว่ามีไอเท็มนี้ในคลังแล้วหรือยัง
            
-
+            if (inventory.ContainsKey(item))
+            {
+                inventory[item] += amount;
+            }
+            else
+            {
+                inventory.Add(item, amount);
+            }
+            
+            
             Debug.Log("Added " + amount + " " + item + ". Total: " + inventory[item]);
         }
 
@@ -20,16 +29,38 @@ namespace Solution {
         {
             //4. ตรวจสอบว่ามีไอเท็มนี้ในคลังหรือไม่
             
+            if (HasItem(item, amount))
+            {
+                inventory[item] -= amount;
+                if (inventory[item] <= 0)
+                {
+                    inventory.Remove(item);
+                    Debug.Log("Remove all" + amount +"from inventory");
+                }
+                else
+                {
+                    Debug.Log("Remove " + amount + " " + item);
+                
+                }
+            }
+            else
+            {
+                Debug.Log(" Can not remove item");
+            }
+
+
         }
         public bool HasItem(string item, int amount)
         {
             //2. ตรวจสอบว่ามีไอเท็มนี้ในคลังหรือไม่ และมีจำนวนเพียงพอหรือไม่
-            return false;
+
+            return inventory.ContainsKey(item) && inventory[item] >= amount;
         }
         // ตรวจสอบจำนวนไอเท็ม
-        public int GetItemCount(string item)
+        public int GetItemCount(string item , int amount)
         {
             //3. ตรวจสอบว่ามีไอเท็มนี้ในคลังหรือไม่ ถ้ามีให้คืนค่าจำนวนไอเท็มนั้น
+            
             return 0;
         }
 
